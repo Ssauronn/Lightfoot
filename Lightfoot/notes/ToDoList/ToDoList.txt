@@ -1,0 +1,57 @@
+getting everything working
+    - camera
+        - follows player - DONE
+    - movement
+        - human form - DONE
+        - hare (top of snow) form - DONE
+        - hare (dug in snow) form - DONE
+            - store last known location when first digging down - DONE
+        - wolf movement
+    - freeze status
+        - freeze bar on UI - DONE
+        - adjusted by dug in snow or not - DONE
+    - bonfires
+        - replenish freeze status - DONE
+        - light map on snow for bonfires (unsure, could just be shaders applied on snow)
+    - UI
+        - freeze bar - DONE
+        - next bonfire
+    - Wolf AI
+        - States
+            - Idle
+            - Scared of Human
+            - Hunting Human
+            - Hunting Hare on Top of Snow
+            - Hunting Hare Dug into Snow
+            - Big Patrol
+            - Return to Patrol Route
+        - Actions
+            - Walk
+                - If player is in human form
+                - If player is in rabbit form dug in snow
+                - While hunting for player when player is dug in
+                - While patrolling
+            - Run
+                - If player is in rabbit form on top of snow
+                - After the player has dug in but before reaching player last known location
+                - If Wolf hears player while player is dug in snow
+            - Stand
+                - If the Wolf has completed it's patrol and is taking a momentary break
+                - If the Wolf is alone on screen and the player is in human form only
+                - If the Wolf has reached the player's last known location on screen and is waiting a moment before searching in a tight circle for player
+    -Sounds needed:
+         - Walking through snow (human form)
+         - Light padding through snow (snow hare top form)
+         - Light digging through snow (snow hare dug in form)
+         - Heavy padding through snow (wolf movement)
+         - Wolf howl (when transforming into snow hare top form)
+         - Wolf growl (when seeing player human form)
+         - Wolf snapping (when killing player)
+         - Wolf is close enough to and will kill player
+         - Death sound
+         - Wind sound
+         - Bonfire sound
+         - Human form music
+         - Being hunted (snow hare top form, or more than 1 wolf while in human form) music
+         - Hiding in snow music
+         - Footsteps on wood (human form in cabin)
