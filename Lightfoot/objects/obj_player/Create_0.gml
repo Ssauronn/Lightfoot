@@ -18,7 +18,7 @@ enum playerDirection {
 }
 
 playerSprite[forms.human, playerDirection.right] = spr_player;
-playerSprite[forms.human, playerDirection.up] = spr_player_human_up;
+playerSprite[forms.human, playerDirection.up] = spr_player;
 playerSprite[forms.human, playerDirection.left] = spr_player;
 playerSprite[forms.human, playerDirection.down] = spr_player;
 playerSprite[forms.snowharetop, playerDirection.right] = spr_player;
