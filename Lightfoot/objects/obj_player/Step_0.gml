@@ -1,6 +1,4 @@
 /// @description Change Variables
-// Set sprite based on states
-sprite_index = playerSprite[playerCurrentForm, playerCurrentDirection];
 
 // Check for inputs to move player
 var right_ = 0;
@@ -48,30 +46,60 @@ else {
 	currentMovementSpeed = 0;
 }
 
-if horizontal_ != 0 {
-	// Move player
-	x += lengthdir_x(currentMovementSpeed * dt_, point_direction(0, 0, horizontal_, 0));
-	// Then set direction enum, which will affect sprite setting
-	switch horizontal_ {
-		case 1:
-			playerCurrentDirection = playerDirection.right;
-			break;
-		case -1:
-			playerCurrentDirection = playerDirection.left;
-			break;
-	}
-}
+// Move player and set direction for sprite setting
 if vertical_ != 0 {
+	// Move the player
 	y += lengthdir_y(currentMovementSpeed * dt_, point_direction(0, 0, 0, vertical_));
 	// Then set direction enum, which will affect sprite setting
-	switch vertical_ {
-		case 1:
-			playerCurrentDirection = playerDirection.down;
-			break;
-		case -1:
-			playerCurrentDirection = playerDirection.up;
-			break;
+	if !playerCurrentDirectionAlreadySet {
+		switch vertical_ {
+			case 1:
+				playerCurrentDirection = playerDirection.down;
+				break;
+			case -1:
+				playerCurrentDirection = playerDirection.up;
+				break;
+		}
 	}
+}
+if horizontal_ != 0 {
+	// Move the player
+	x += lengthdir_x(currentMovementSpeed * dt_, point_direction(0, 0, horizontal_, 0));
+	// Then set direction enum, which will affect sprite setting
+	if !playerCurrentDirectionAlreadySet {
+		switch horizontal_ {
+			case 1:
+				playerCurrentDirection = playerDirection.right;
+				break;
+			case -1:
+				playerCurrentDirection = playerDirection.left;
+				break;
+		}
+	}
+}
+
+// This check sets a variable which prevents the sprite from changing during movement
+// once it's set, keeping the sprite constant while moving.
+if currentMovementSpeed != 0 {
+	playerCurrentDirectionAlreadySet = true;
+}
+else {
+	playerCurrentDirectionAlreadySet = false;
+}
+// Here I check to make sure the sprite isn't directly opposite of the current movement
+// direction. If it is, I reset the aforementioned variable to allow for a single resetting
+// of the player sprite.
+if (horizontal_ == 1) && ((playerCurrentDirection == playerDirection.left) || (vertical_ = 0)) {
+	playerCurrentDirection = playerDirection.right;
+}
+if (horizontal_ == -1) && ((playerCurrentDirection == playerDirection.right) || (vertical_ = 0)) {
+	playerCurrentDirection = playerDirection.left;
+}
+if (vertical_ == 1) && ((playerCurrentDirection == playerDirection.up) || (horizontal_ == 0)) {
+	playerCurrentDirection = playerDirection.down;
+}
+if (vertical_ == -1) && ((playerCurrentDirection == playerDirection.down) || (horizontal_ == 0)) {
+	playerCurrentDirection = playerDirection.up;
 }
 
 

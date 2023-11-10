@@ -17,10 +17,10 @@ enum playerDirection {
 	down
 }
 
-playerSprite[forms.human, playerDirection.right] = spr_player;
-playerSprite[forms.human, playerDirection.up] = spr_player;
-playerSprite[forms.human, playerDirection.left] = spr_player;
-playerSprite[forms.human, playerDirection.down] = spr_player;
+playerSprite[forms.human, playerDirection.right] = spr_player_human_right;
+playerSprite[forms.human, playerDirection.up] = spr_player_human_up;
+playerSprite[forms.human, playerDirection.left] = spr_player_human_left;
+playerSprite[forms.human, playerDirection.down] = spr_player_human_down;
 playerSprite[forms.snowharetop, playerDirection.right] = spr_player;
 playerSprite[forms.snowharetop, playerDirection.up] = spr_player;
 playerSprite[forms.snowharetop, playerDirection.left] = spr_player;
@@ -32,5 +32,6 @@ playerSprite[forms.snowharedugin, playerDirection.down] = spr_player;
 
 playerCurrentForm = forms.human;
 playerCurrentDirection = playerDirection.right;
+playerCurrentDirectionAlreadySet = false;
 
 

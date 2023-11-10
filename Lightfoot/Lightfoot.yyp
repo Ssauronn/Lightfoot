@@ -9,7 +9,7 @@
     "children": [],
     "name": "Default",
   },
-  "defaultScriptType": 0,
+  "defaultScriptType": 1,
   "Folders": [
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Animation Curves","folderPath":"folders/Animation Curves.yy",},
     {"resourceType":"GMFolder","resourceVersion":"1.0","name":"Extensions","folderPath":"folders/Extensions.yy",},
@@ -38,6 +38,9 @@
     {"id":{"name":"spr_bonfire","path":"sprites/spr_bonfire/spr_bonfire.yy",},},
     {"id":{"name":"spr_player_human_up","path":"sprites/spr_player_human_up/spr_player_human_up.yy",},},
     {"id":{"name":"obj_wolf","path":"objects/obj_wolf/obj_wolf.yy",},},
+    {"id":{"name":"spr_player_human_left","path":"sprites/spr_player_human_left/spr_player_human_left.yy",},},
+    {"id":{"name":"spr_player_human_right","path":"sprites/spr_player_human_right/spr_player_human_right.yy",},},
+    {"id":{"name":"spr_player_human_down","path":"sprites/spr_player_human_down/spr_player_human_down.yy",},},
     {"id":{"name":"obj_bonfire","path":"objects/obj_bonfire/obj_bonfire.yy",},},
     {"id":{"name":"obj_camera","path":"objects/obj_camera/obj_camera.yy",},},
     {"id":{"name":"spr_player","path":"sprites/spr_player/spr_player.yy",},},
