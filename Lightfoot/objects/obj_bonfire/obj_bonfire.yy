@@ -25,7 +25,10 @@
   "physicsStartAwake": true,
   "properties": [],
   "solid": false,
-  "spriteId": null,
+  "spriteId": {
+    "name": "spr_bonfire",
+    "path": "sprites/spr_bonfire/spr_bonfire.yy",
+  },
   "spriteMaskId": null,
   "visible": true,
 }
