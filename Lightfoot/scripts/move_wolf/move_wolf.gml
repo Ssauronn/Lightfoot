@@ -56,8 +56,32 @@ function move_wolf(x_, y_) {
 	if currentSpeed > currentMaxSpeed {
 		currentSpeed = currentMaxSpeed;
 	}
+	
+	// X and Y vector to move the Wolf. These are adjusted by avoidance from other Wolves.
+	var x_vector_ = lengthdir_x(min(currentSpeed * dt_, currentMaxSpeed / room_speed), point_direction(x, y, x_, y_));
+	var y_vector_ = lengthdir_y(min(currentSpeed * dt_, currentMaxSpeed / room_speed), point_direction(x, y, x_, y_));
+	
+	// Check for nearest wolf object by temporarily shifting the Wolf away from it's position,
+	// then checking for an instance of the nearest Wolf object to it's original position,
+	// finally followed by moving back to it's original position.
+	var nearest_object_, original_x_;
+	original_x_ = x;
+	var distance_to_check_for_ = (sprite_get_width(sprite_index) * 1.5) + 1;
+	x += distance_to_check_for_;
+	nearest_object_ = instance_nearest(original_x_, y, object_index);
+	// If the nearest object found is not itself, then that means it should execute avoidance code.
+	if nearest_object_ != id {
+		var point_direction_to_nearest_ = point_direction(nearest_object_.x, nearest_object_.y, original_x_, y);
+		var point_distance_to_nearest_ = point_distance(original_x_, y, nearest_object_.x, nearest_object_.y);
+		x_vector_ += (lengthdir_x(lerp(0, (distance_to_check_for_ - point_distance_to_nearest_), 0.5), point_direction_to_nearest_)) / room_speed;
+		y_vector_ += (lengthdir_y(lerp(0, (distance_to_check_for_ - point_distance_to_nearest_), 0.5), point_direction_to_nearest_)) / room_speed;
+	}
+	x = original_x_;
+	
+	/// Finally, after setting the initial movement vectors and then adjusting for object avoidance,
+	/// move the object.
 	// Add the minimum of either the current speed times the delta time, or max move speed,
 	// so that a frame stutter doesn't blast the object forward.
-	x += lengthdir_x(min(currentSpeed * dt_, currentMaxSpeed / room_speed), point_direction(x, y, x_, y_));
-	y += lengthdir_y(min(currentSpeed * dt_, currentMaxSpeed / room_speed), point_direction(x, y, x_, y_));
+	x += x_vector_;
+	y += y_vector_;
 }

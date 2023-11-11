@@ -12,8 +12,8 @@ canSeePlayer = false;
 isOnScreen = false;
 
 /// Movement
-maxWalkSpeed = target.humanMaxMovementSpeed + 64;
-maxRunSpeed = target.snowHareTopMaxMovementSpeed;
+maxWalkSpeed = target.humanMaxMovementSpeed - 32;
+maxRunSpeed = target.snowHareTopMaxMovementSpeed - 32;
 currentMaxSpeed = maxWalkSpeed;
 wolfAcceleration = currentMaxSpeed * 4;
 currentSpeed = 0;
