@@ -21,7 +21,7 @@ function wolf_idle() {
 	if idleStateToReturnTo == wolfActionState.smallpatrol {
 		// Count down the wolf timer if the timer is still above 0
 		if searchingForDugInHareCurrentTimer >= 0 {
-			searchingForDugInHareCurrentTimer -= dt_;
+			searchingForDugInHareCurrentTimer -= min(1 / room_speed, dt_);
 		}
 		// If the timer runs out, since we're in the idle state, return back to the patrol
 		// state, which can then handle the rest correctly.
@@ -34,7 +34,7 @@ function wolf_idle() {
 	// This can be set to 0 in previous code in the same frame to force the below code to execute,
 	// in case for example outside timers hit 0 before the idle timer hits 0.
 	if idleTimerCurrentTime > 0 {
-		idleTimerCurrentTime -= dt_;
+		idleTimerCurrentTime -= min(1 / room_speed, dt_);
 	}
 	else {
 		wolfCurrentAction = idleStateToReturnTo;
@@ -211,13 +211,13 @@ function wolf_hunt_hare_dug_in() {
 	// change to small patrol state, which slowly patrols around it's current position,
 	// looking for the player.
 	if point_distance(x, y, lastKnownX, lastKnownY) <= (currentSpeed / 5) {
-		hasReachedLastKnownLocation = true;
 		searchingForDugInHareCurrentTimer = searchingForDugInHareMaxTimer;
 		wolfRandomPatrolRouteX = lastKnownX + irandom_range((wolfSmallPatrolRandomRouteRange * -1), wolfSmallPatrolRandomRouteRange);
 		wolfRandomPatrolRouteY = lastKnownY + irandom_range((wolfSmallPatrolRandomRouteRange * -1), wolfSmallPatrolRandomRouteRange);
+		idleStateToReturnTo = wolfCurrentAction;
 		wolfCurrentAction = wolfActionState.smallpatrol;
 		wolfCurrentMoveState = wolfMoveState.walk;
-		wolfReturnToPatrolStart = false;
+		wolfReturnToPatrolStart = true;
 	}
 }
 
@@ -229,11 +229,11 @@ function wolf_big_patrol() {
 	wolfCurrentMoveState = wolfMoveState.walk;
 	
 	// If the Wolf gets within range of the target patrol route to move to, idle for a moment.
-	if point_distance(x, y, targetToMoveToX, targetToMoveToY) < (currentMaxSpeed / 5) {
+	if point_distance(x, y, targetToMoveToX, targetToMoveToY) < (maxRunSpeed / (room_speed / 5)) {
 		wolfCurrentMoveState = wolfMoveState.stand;
 		idleStateToReturnTo = wolfCurrentAction;
 		wolfCurrentAction = wolfActionState.idle;
-		idleTimerCurrentTime = irandom_range(0, wolfPatrolIdleTime);
+		idleTimerCurrentTime = irandom_range(1, wolfPatrolIdleTime);
 	}
 	
 	// I don't set targetToMoveToX and targetToMoveToY in this function because I want those
@@ -257,8 +257,10 @@ function wolf_small_patrol() {
 		wolfCurrentMoveState = wolfMoveState.stand;
 		idleStateToReturnTo = wolfCurrentAction;
 		wolfCurrentAction = wolfActionState.idle;
-		wolfReturnToPatrolStart = !wolfReturnToPatrolStart;
 		idleTimerCurrentTime = irandom_range(1, wolfPatrolIdleTime);
+		if idleStateToReturnTo != wolfActionState.huntingharedugin {
+			wolfReturnToPatrolStart = !wolfReturnToPatrolStart;
+		}
 	}
 	
 	// I don't set targetToMoveToX and targetToMoveToY in this function because I want those
@@ -267,12 +269,11 @@ function wolf_small_patrol() {
 	
 	// Count down the wolf timer if the timer is still above 0
 	if (searchingForDugInHareCurrentTimer >= 0) && (isOnScreen) {
-		searchingForDugInHareCurrentTimer -= dt_;
+		searchingForDugInHareCurrentTimer -= min(1 / room_speed, dt_);
 	}
 	// If the timer runs out, set the Wolf to return back to it's normal patrol route.
 	else {
 		canSeePlayer = false;
-		hasReachedLastKnownLocation = false;
 		wolfCurrentAction = wolfActionState.returntopatrol;
 		// Here I do in fact set targetToMoveToX and targetToMoveToY because this will
 		// only execute once, at the start of the return to the patrol route.
@@ -297,6 +298,18 @@ function wolf_return_to_patrol() {
 	// Set the target to move to variables
 	targetToMoveToX = wolfBigPatrolRouteStartX;
 	targetToMoveToY = wolfBigPatrolRouteStartY;
+	
+	// If the Wolf gets within range of the target, start patrolling.
+	if point_distance(x, y, targetToMoveToX, targetToMoveToY) <= (maxRunSpeed / (room_speed / 5)) {
+		wolfCurrentMoveState = wolfMoveState.walk;
+		wolfCurrentAction = wolfActionState.bigpatrol;
+		idleStateToReturnTo = wolfCurrentAction;
+		targetToMoveToX = wolfBigPatrolRouteStartX + irandom_range(wolfBigPatrolRandomRouteRange * -1, wolfBigPatrolRandomRouteRange);
+		targetToMoveToY = wolfBigPatrolRouteStartY + irandom_range(wolfBigPatrolRandomRouteRange * -1, wolfBigPatrolRandomRouteRange);
+		idleTimerCurrentTime = 0;
+		searchingForDugInHareCurrentTimer = 0;
+		wolfReturnToPatrolStart = false;
+	}
 }
 
 

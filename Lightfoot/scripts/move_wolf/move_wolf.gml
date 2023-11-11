@@ -19,10 +19,10 @@ function move_wolf(x_, y_) {
 			currentMaxSpeed = maxRunSpeed;
 			break;
 		case wolfActionState.huntingharedugin:
-			currentMaxSpeed = maxRunSpeed;
+			currentMaxSpeed = maxWalkSpeed;
 			break;
 		case wolfActionState.bigpatrol:
-			currentMaxSpeed = maxWalkSpeed / 2;
+			currentMaxSpeed = maxWalkSpeed / 3;
 			break;
 		case wolfActionState.smallpatrol:
 			currentMaxSpeed = maxWalkSpeed / 4;

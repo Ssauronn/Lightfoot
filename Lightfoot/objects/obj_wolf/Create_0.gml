@@ -10,11 +10,10 @@ target = obj_player.id;
 inPack = false;
 canSeePlayer = false;
 isOnScreen = false;
-hasReachedLastKnownLocation = false;
 
 /// Movement
 maxWalkSpeed = target.humanMaxMovementSpeed + 64;
-maxRunSpeed = target.snowHareTopMaxMovementSpeed + 64;
+maxRunSpeed = target.snowHareTopMaxMovementSpeed;
 currentMaxSpeed = maxWalkSpeed;
 wolfAcceleration = currentMaxSpeed * 4;
 currentSpeed = 0;
@@ -37,8 +36,8 @@ wolfBigPatrolRouteStartX = x;
 wolfBigPatrolRouteStartY = y;
 // The random point to move to for it's next goal. Changes each time the Wolf
 // reaches this point.
-wolfBigPatrolRandomRouteRange = 300;
-wolfSmallPatrolRandomRouteRange = 128;
+wolfBigPatrolRandomRouteRange = viewH / 3;
+wolfSmallPatrolRandomRouteRange = viewH / 6;
 wolfRandomPatrolRouteX = x + irandom_range((wolfBigPatrolRandomRouteRange * -1), wolfBigPatrolRandomRouteRange);
 wolfRandomPatrolRouteY = y + irandom_range((wolfBigPatrolRandomRouteRange * -1), wolfBigPatrolRandomRouteRange);
 // Controls whether the Wolf is moving to a random patrol route goal, or back
@@ -53,7 +52,7 @@ wolfPatrolIdleTime = 2;
 searchingForDugInHareMaxTimer = 6;
 searchingForDugInHareCurrentTimer = 0;
 smellRange = room_height / 4;
-hearingRange = 2 * sprite_get_width(spr_player_human_up);
+hearingRange = 1 * sprite_get_width(spr_player_human_up);
 
 /// Idle state variables, which are used often and exclusive to the Idle state
 idleTimerStartTime = 0;

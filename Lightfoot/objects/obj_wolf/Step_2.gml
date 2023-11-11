@@ -15,15 +15,18 @@ else {
 
 // Check to see if any other wolves can see the player, and if so, mark the Wolf as in a pack.
 if canSeePlayer {
-	var self_id_ = id;
 	// If all Wolves haven't been checked yet, go through each Wolf.
 	if !checkedIfOnScreen {
 		checkedIfOnScreen = true;
 		with obj_wolf {
-			if isOnScreen || (obj_player.playerCurrentForm == forms.snowharetop && canSeePlayer) {
-				if self.id != self_id_ {
-					inPack = true;
-					self_id_.inPack = true;
+			var self_id_ = id;
+			inPack = false;
+			with obj_wolf {
+				if isOnScreen || (obj_player.playerCurrentForm == forms.snowharetop && canSeePlayer) {
+					if self.id != self_id_ {
+						inPack = true;
+						self_id_.inPack = true;
+					}
 				}
 			}
 		}
