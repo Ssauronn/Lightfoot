@@ -40,7 +40,6 @@ function wolf_idle() {
 		wolfCurrentAction = idleStateToReturnTo;
 		// If the current action now is to patrol, inverse the patrol route
 		if (wolfCurrentAction == wolfActionState.bigpatrol) || (wolfCurrentAction == wolfActionState.smallpatrol) {
-			wolfReturnToPatrolStart = !wolfReturnToPatrolStart;
 			// Set target variables depending on whether the current action is to return to a big
 			// patrol, a small patrol, or to begin a big or small patrol to a new point.
 			if !wolfReturnToPatrolStart {
@@ -69,6 +68,9 @@ function wolf_idle() {
 						break;
 				}
 			}
+			// After I use wolfReturnToPatrolStart to set the above target variables, reverse
+			// the value of this variable, so that next time, it reverses it's action.
+			wolfReturnToPatrolStart = !wolfReturnToPatrolStart;
 		}
 	}
 }
@@ -79,7 +81,7 @@ function wolf_idle() {
 function wolf_circle_human() {
 	// Set the move state for the Wolf, which sets the sprite
 	wolfCurrentMoveState = wolfMoveState.walk;
-	
+
 	if !inPack {
 		// Set the target to move to equal to a point tangental to the circle
 		// the Wolf will be circling the player in, in the direction set at
@@ -98,9 +100,54 @@ function wolf_circle_human() {
 		}
 		// After properly adjusting the point direction, set the target point to a coordinate
 		// tangental to the circle in the direction it's assigned to rotate in.
-		targetToMoveToX = obj_player.x + lengthdir_x(1, point_direction_);
-		targetToMoveToY = obj_player.y + lengthdir_y(1, point_direction_);
-	
+		var dir_x_ = lengthdir_x(circleRadius, point_direction(obj_player.x, obj_player.y, x, y));
+		var dir_y_ = lengthdir_y(circleRadius, point_direction(obj_player.x, obj_player.y, x, y));
+		var tangent_dir_x_ = lengthdir_x((maxWalkSpeed / 60), point_direction_);
+		var tangent_dir_y_ = lengthdir_y((maxWalkSpeed / 60), point_direction_);
+		targetToMoveToX = (obj_player.x + dir_x_) + tangent_dir_x_;
+		targetToMoveToY = (obj_player.y + dir_y_) + tangent_dir_y_;
+		// Check to see if the target is out of bounds, and if so, make sure that's fixed.
+		if sign(targetToMoveToX) == -1 {
+			if circleHumanClockwise {
+				targetToMoveToX = 0;
+				targetToMoveToY = 0;
+			}
+			else {
+				targetToMoveToX = 0;
+				targetToMoveToY = room_height;
+			}
+		}
+		else if sign(targetToMoveToY) == -1 {
+			if circleHumanClockwise {
+				targetToMoveToX = room_width;
+				targetToMoveToY = 0;
+			}
+			else {
+				targetToMoveToX = 0;
+				targetToMoveToY = 0;
+			}
+		}
+		else if targetToMoveToX > room_width {
+			if circleHumanClockwise {
+				targetToMoveToX = room_width;
+				targetToMoveToY = room_height;
+			}
+			else {
+				targetToMoveToX = room_width;
+				targetToMoveToY = 0;
+			}
+		}
+		else if targetToMoveToY > room_height {
+			if circleHumanClockwise {
+				targetToMoveToX = 0;
+				targetToMoveToY = room_height;
+			}
+			else {
+				targetToMoveToX = room_width;
+				targetToMoveToY = room_height;
+			}
+		}
+
 		// Set the target to move to equal to the center of the circle if the
 		// distance to the player is greater than that circle. This is done AFTER
 		// the above section to allow for a buffer in case the player moves, to prevent
@@ -110,9 +157,14 @@ function wolf_circle_human() {
 		// If the current coordinate to move to is outside of a bounding circle
 		// around the radius at which the Wolf should circle the player, move to
 		// the closest point on that exact circle.
-		if (point_distance(x, y, targetToMoveToX, targetToMoveToY) > circle_max_distance_) || (point_distance(x, y, targetToMoveToX, targetToMoveToY) < circle_min_distance_) {
-			targetToMoveToX = obj_player.x + lengthdir_x(circleRadius, point_direction(obj_player.x, obj_player.y, x, y));
-			targetToMoveToY = obj_player.y + lengthdir_y(circleRadius, point_direction(obj_player.x, obj_player.y, x, y));
+		var point_distance_target_to_move_to_ = point_distance(obj_player.x, obj_player.y, targetToMoveToX, targetToMoveToY);
+		if ((point_distance_target_to_move_to_ > circle_max_distance_) || (point_distance_target_to_move_to_ < circle_min_distance_)) && ((targetToMoveToX != 0) && (targetToMoveToY != 0)) {
+			targetToMoveToX = obj_player.x + dir_x_;
+			targetToMoveToY = obj_player.y + dir_y_;
+			show_debug_message("Moving TO CIRCLE");
+		}
+		else {
+			show_debug_message("Moving AROUND Player");
 		}
 	}
 	else {
@@ -158,7 +210,7 @@ function wolf_hunt_hare_dug_in() {
 	// less than the distance it'll take the Wolf to reach that location in 1/5 of a second,
 	// change to small patrol state, which slowly patrols around it's current position,
 	// looking for the player.
-	if point_distance(x, y, lastKnownX, lastKnownY) <= (currentMovementSpeed / 5) {
+	if point_distance(x, y, lastKnownX, lastKnownY) <= (currentSpeed / 5) {
 		hasReachedLastKnownLocation = true;
 		searchingForDugInHareCurrentTimer = searchingForDugInHareMaxTimer;
 		wolfRandomPatrolRouteX = lastKnownX + irandom_range((wolfSmallPatrolRandomRouteRange * -1), wolfSmallPatrolRandomRouteRange);
@@ -201,11 +253,12 @@ function wolf_small_patrol() {
 	wolfCurrentMoveState = wolfMoveState.walk;
 	
 	// If the Wolf gets within range of the target patrol route to move to, idle for a moment.
-	if point_distance(x, y, targetToMoveToX, targetToMoveToY) < (currentMaxSpeed / 5) {
+	if point_distance(x, y, targetToMoveToX, targetToMoveToY) < (currentMaxSpeed / (room_speed / 5)) {
 		wolfCurrentMoveState = wolfMoveState.stand;
 		idleStateToReturnTo = wolfCurrentAction;
 		wolfCurrentAction = wolfActionState.idle;
-		idleTimerCurrentTime = irandom_range(0, wolfPatrolIdleTime);
+		wolfReturnToPatrolStart = !wolfReturnToPatrolStart;
+		idleTimerCurrentTime = irandom_range(1, wolfPatrolIdleTime);
 	}
 	
 	// I don't set targetToMoveToX and targetToMoveToY in this function because I want those

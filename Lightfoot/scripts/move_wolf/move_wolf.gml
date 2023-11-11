@@ -56,7 +56,8 @@ function move_wolf(x_, y_) {
 	if currentSpeed > currentMaxSpeed {
 		currentSpeed = currentMaxSpeed;
 	}
-	x += lengthdir_x(currentSpeed * dt_, point_direction(x, y, x_, y_));
-	y += lengthdir_y(currentSpeed * dt_, point_direction(x, y, x_, y_));
-	var testing_ = 1;
+	// Add the minimum of either the current speed times the delta time, or max move speed,
+	// so that a frame stutter doesn't blast the object forward.
+	x += lengthdir_x(min(currentSpeed * dt_, currentMaxSpeed / room_speed), point_direction(x, y, x_, y_));
+	y += lengthdir_y(min(currentSpeed * dt_, currentMaxSpeed / room_speed), point_direction(x, y, x_, y_));
 }

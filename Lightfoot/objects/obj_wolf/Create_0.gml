@@ -27,8 +27,9 @@ targetToMoveToY = -1;
 circleHumanClockwise = irandom_range(0, 1);
 // Set the radius of the circle that the Wolf circles around the player equal to a random
 // range between how long it would take the Wolf to reach the player in a little less than
-// 2 seconds to 4 seconds.
-circleRadius = irandom_range(maxRunSpeed * 2, maxRunSpeed * 4);
+// 1 to 2 seconds.
+//circleRadius = irandom_range(maxWalkSpeed, maxWalkSpeed * 1.5);
+circleRadius = maxWalkSpeed * 1.5;
 
 /// Patrol Variables
 // Big patrol route start. Never changes, always set to where the Wolf spawns.

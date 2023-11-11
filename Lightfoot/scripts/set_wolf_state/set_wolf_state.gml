@@ -3,8 +3,7 @@
 ///				and player state variables.
 function set_wolf_state() {
 	// Check to see if the Wolf is on screen, and if so, mark it as such.
-	if point_in_rectangle(x, y, obj_camera.x - (display_get_width() / 2), obj_camera.y - (display_get_height() / 2), obj_camera.x + (display_get_width() / 2), obj_camera.y + (display_get_height() / 2)) {
-		isOnScreen = true;
+	if point_in_rectangle(x + (sprite_get_width(sprite_index) / 2), y + (sprite_get_height(sprite_index) / 2), viewX, viewY, viewX + viewW, viewY + viewH) {
 		if obj_player.playerCurrentForm != forms.snowharedugin {
 			canSeePlayer = true;
 		}
@@ -87,7 +86,7 @@ function set_wolf_state() {
 		}
 	}
 	// Else if the Wolf can't see the player
-	else {
+	else if (idleStateToReturnTo != wolfActionState.smallpatrol) && (idleStateToReturnTo != wolfActionState.bigpatrol) {
 		if wolfCurrentAction != wolfActionState.bigpatrol {
 			wolfCurrentAction = wolfActionState.returntopatrol;
 			idleStateToReturnTo = wolfActionState.bigpatrol;

@@ -4,7 +4,6 @@
 var dt_ = delta_time / 1000000;
 if formCooldown > 0 {
 	formCooldown -= dt_;
-	show_debug_message(formCooldown);
 }
 // Swap between Snow Hare and Human form as long as the form cooldown is over
 if device_mouse_check_button_pressed(0, mb_left) {
