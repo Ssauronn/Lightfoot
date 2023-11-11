@@ -1,8 +1,7 @@
 {
   "FolderOrderSettings": [
-    {"name":"Wolf States","order":2,"path":"folders/Scripts/Wolf States.yy",},
     {"name":"Internal Functions","order":3,"path":"folders/Scripts/Internal Functions.yy",},
-    {"name":"Player States","order":4,"path":"folders/Scripts/Player States.yy",},
+    {"name":"Wolf States","order":2,"path":"folders/Scripts/Wolf States.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"obj_ui","order":1,"path":"objects/obj_ui/obj_ui.yy",},
