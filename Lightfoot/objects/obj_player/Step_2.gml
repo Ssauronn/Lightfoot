@@ -8,4 +8,9 @@ if playerCurrentForm != forms.snowharedugin {
 	lastKnownY = y;
 }
 
+// Adjust the global variable used to check if a Wolf is on screen. I do this on the
+// player object and not a Wolf object because I want this check to only execute once
+// per frame.
+checkedIfOnScreen = false;
+
 

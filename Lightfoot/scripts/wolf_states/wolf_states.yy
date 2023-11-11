@@ -1,11 +1,11 @@
 {
   "resourceType": "GMScript",
   "resourceVersion": "1.0",
-  "name": "find_nearest_bonfire",
+  "name": "wolf_states",
   "isCompatibility": false,
   "isDnD": false,
   "parent": {
-    "name": "Internal Functions",
-    "path": "folders/Scripts/Internal Functions.yy",
+    "name": "Wolf States",
+    "path": "folders/Scripts/Wolf States.yy",
   },
 }

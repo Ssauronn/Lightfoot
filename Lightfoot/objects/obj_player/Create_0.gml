@@ -5,13 +5,13 @@ currentMovementSpeed = 0;
 maxActualMovementSpeed = 0;
 actualAcceleration = 0;
 /// Human Speed Variables
-humanMaxMovementSpeed = 250;
+humanMaxMovementSpeed = 150;
 humanAcceleration = humanMaxMovementSpeed * 4;
 /// Snow Hare on top of snow variables
-snowHareTopMaxMovementSpeed = 400;
+snowHareTopMaxMovementSpeed = 300;
 snowHareTopAcceleration = snowHareTopMaxMovementSpeed * 10;
 /// Snow Hare dug into snow variables
-snowHareDugInMaxMovementSpeed = 150;
+snowHareDugInMaxMovementSpeed = 50;
 snowHareDugInAcceleration = snowHareDugInMaxMovementSpeed * 3;
 
 /// Form states

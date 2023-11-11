@@ -3,8 +3,8 @@
 ///				Returns the ID of the nearest bonfire, or noone if no bonfire exists.
 function find_nearest_bonfire(x_, y_) {
 	if instance_exists(obj_bonfire) {
-		var origin_x_ = x;
-		var origin_y_ = y;
+		var origin_x_ = obj_player.x;
+		var origin_y_ = obj_player.y;
 		var closest_id_, closest_x_, closest_y_;
 		closest_id_ = noone;
 		with obj_bonfire {
@@ -23,3 +23,5 @@ function find_nearest_bonfire(x_, y_) {
 	}
 	else return noone;
 }
+
+
