@@ -21,6 +21,15 @@ currentSpeed = 0;
 targetToMoveToX = -1;
 targetToMoveToY = -1;
 
+/// Circling around player variables
+// Set it so that each Wolf always chooses to circle in one direction, but that direction
+// is random and is set at the start of the game.
+circleHumanClockwise = irandom_range(0, 1);
+// Set the radius of the circle that the Wolf circles around the player equal to a random
+// range between how long it would take the Wolf to reach the player in a little less than
+// 2 seconds to 4 seconds.
+circleRadius = irandom_range(maxRunSpeed * 2, maxRunSpeed * 4);
+
 /// Patrol Variables
 // Big patrol route start. Never changes, always set to where the Wolf spawns.
 wolfBigPatrolRouteStartX = x;
@@ -96,6 +105,6 @@ wolfCurrentDirection = wolfDirection.right;
 
 // This is probably uneeded, but here I set the return state by default
 // to returning to patrol path, in case anything bugs out.
-idleStateToReturnTo = wolfActionState.idle;
+idleStateToReturnTo = wolfActionState.returntopatrol;
 
 

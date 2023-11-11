@@ -37,6 +37,10 @@ function set_wolf_state() {
 			// If the Wolf isn't already patrolling, it needs to return to it's patrol route.
 			if wolfCurrentAction != wolfActionState.bigpatrol {
 				wolfCurrentAction = wolfActionState.returntopatrol;
+				idleStateToReturnTo = wolfActionState.bigpatrol;
+				targetToMoveToX = wolfRandomPatrolRouteX;
+				targetToMoveToY = wolfRandomPatrolRouteY;
+				wolfReturnToPatrolStart = false;
 			}
 		}
 		// As long as the Wolf isn't both patrolling already and the player's current form is dug into snow,
@@ -86,6 +90,10 @@ function set_wolf_state() {
 	else {
 		if wolfCurrentAction != wolfActionState.bigpatrol {
 			wolfCurrentAction = wolfActionState.returntopatrol;
+			idleStateToReturnTo = wolfActionState.bigpatrol;
+			targetToMoveToX = wolfRandomPatrolRouteX;
+			targetToMoveToY = wolfRandomPatrolRouteY;
+			wolfReturnToPatrolStart = false;
 		}
 	}
 	
@@ -94,6 +102,10 @@ function set_wolf_state() {
 	if (wolfCurrentAction == wolfActionState.smallpatrol) && (searchingForDugInHareCurrentTimer <= 0) {
 		canSeePlayer = false;
 		wolfCurrentAction = wolfActionState.returntopatrol;
+		idleStateToReturnTo = wolfActionState.bigpatrol;
+		targetToMoveToX = wolfRandomPatrolRouteX;
+		targetToMoveToY = wolfRandomPatrolRouteY;
+		wolfReturnToPatrolStart = false;
 	}
 	
 	/// Runs the correct action script based on the state set above.

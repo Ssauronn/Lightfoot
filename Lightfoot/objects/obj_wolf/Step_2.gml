@@ -1,6 +1,6 @@
 /// @description Adjust Variables After Step
 // Set delta time variable
-var dt_ = delta_time;
+var dt_ = delta_time / 1000000;
 
 // Set Wolf animation sprite
 sprite_index = wolfSprite[wolfCurrentMoveState, wolfCurrentDirection];

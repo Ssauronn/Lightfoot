@@ -1,5 +1,8 @@
 ///@function move_wolf(target_x_, target_y_);
 function move_wolf(x_, y_) {
+	// Delta time
+	var dt_ = delta_time / 1000000;
+	
 	// Set max movement speed based on the Wolf's current state
 	switch wolfCurrentAction {
 		case wolfActionState.idle:
@@ -44,4 +47,16 @@ function move_wolf(x_, y_) {
 		wolfAcceleration = 0;
 		exit;
 	}
+	
+	// After everything else is set, finally, add to the current speed using the acceleration
+	// and then move the Wolf towards it's target using that speed.
+	if currentSpeed < currentMaxSpeed {
+		currentSpeed += wolfAcceleration * dt_;
+	}
+	if currentSpeed > currentMaxSpeed {
+		currentSpeed = currentMaxSpeed;
+	}
+	x += lengthdir_x(currentSpeed * dt_, point_direction(x, y, x_, y_));
+	y += lengthdir_y(currentSpeed * dt_, point_direction(x, y, x_, y_));
+	var testing_ = 1;
 }

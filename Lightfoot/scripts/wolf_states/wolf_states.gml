@@ -5,7 +5,7 @@
 ///@description State for Wolf idling.
 function wolf_idle() {
 	// Set delta time
-	var dt_ = delta_time;
+	var dt_ = delta_time / 1000000;
 	
 	// Set the move state for the Wolf, which sets the sprite
 	wolfCurrentMoveState = wolfMoveState.stand;
@@ -41,6 +41,8 @@ function wolf_idle() {
 		// If the current action now is to patrol, inverse the patrol route
 		if (wolfCurrentAction == wolfActionState.bigpatrol) || (wolfCurrentAction == wolfActionState.smallpatrol) {
 			wolfReturnToPatrolStart = !wolfReturnToPatrolStart;
+			// Set target variables depending on whether the current action is to return to a big
+			// patrol, a small patrol, or to begin a big or small patrol to a new point.
 			if !wolfReturnToPatrolStart {
 				switch wolfCurrentAction {
 					case wolfActionState.bigpatrol:
@@ -75,60 +77,95 @@ function wolf_idle() {
 ///@function wolf_circle_human();
 ///@description State for Wolf circling the Human form (only 1 on screen).
 function wolf_circle_human() {
-	// Set delta time
-	var dt_ = delta_time;
-	
 	// Set the move state for the Wolf, which sets the sprite
 	wolfCurrentMoveState = wolfMoveState.walk;
 	
+	if !inPack {
+		// Set the target to move to equal to a point tangental to the circle
+		// the Wolf will be circling the player in, in the direction set at
+		// the beginning of the game by circleHumanClockwise.
+		if circleHumanClockwise {
+			var point_direction_ = point_direction(x, y, obj_player.x, obj_player.y) + 90;
+			if point_direction_ >= 360 {
+				point_direction_ -= 360;
+			}
+		}
+		else {
+			var point_direction_ = point_direction(x, y, obj_player.x, obj_player.y) - 90;
+			if point_direction_ < 0 {
+				point_direction_ += 360;
+			}
+		}
+		// After properly adjusting the point direction, set the target point to a coordinate
+		// tangental to the circle in the direction it's assigned to rotate in.
+		targetToMoveToX = obj_player.x + lengthdir_x(1, point_direction_);
+		targetToMoveToY = obj_player.y + lengthdir_y(1, point_direction_);
+	
+		// Set the target to move to equal to the center of the circle if the
+		// distance to the player is greater than that circle. This is done AFTER
+		// the above section to allow for a buffer in case the player moves, to prevent
+		// really weird looking movement every time the player moves anywhere.
+		var circle_min_distance_ = circleRadius - 32;
+		var circle_max_distance_ = circleRadius + 32;
+		// If the current coordinate to move to is outside of a bounding circle
+		// around the radius at which the Wolf should circle the player, move to
+		// the closest point on that exact circle.
+		if (point_distance(x, y, targetToMoveToX, targetToMoveToY) > circle_max_distance_) || (point_distance(x, y, targetToMoveToX, targetToMoveToY) < circle_min_distance_) {
+			targetToMoveToX = obj_player.x + lengthdir_x(circleRadius, point_direction(obj_player.x, obj_player.y, x, y));
+			targetToMoveToY = obj_player.y + lengthdir_y(circleRadius, point_direction(obj_player.x, obj_player.y, x, y));
+		}
+	}
+	else {
+		wolfCurrentAction = wolfActionState.huntinghuman;
+		targetToMoveToX = obj_player.x;
+		targetToMoveToY = obj_player.y;
+	}
 }
 
 
 ///@function wolf_hunt_human();
 ///@description State for Wolf hunting the Human form (more than 1 on screen).
 function wolf_hunt_human() {
-	// Set delta time
-	var dt_ = delta_time;
-	
 	// Set the move state for the Wolf, which sets the sprite
 	wolfCurrentMoveState = wolfMoveState.walk;
-	
+	targetToMoveToX = obj_player.x;
+	targetToMoveToY = obj_player.y;
 }
 
 
 ///@function wolf_hunt_hare_top();
 ///@description State for Wolf hunting the Snow Hare while it's on top of the snow.
 function wolf_hunt_hare_top() {
-	// Set delta time
-	var dt_ = delta_time;
-	
 	// Set the move state for the Wolf, which sets the sprite
 	wolfCurrentMoveState = wolfMoveState.run;
-	
+	targetToMoveToX = obj_player.x;
+	targetToMoveToY = obj_player.y;
 }
 
 
 ///@function wolf_hunt_hare_dug_in();
 ///@description State for Wolf hunting the Snow Hare while it's dug into the snow.
 function wolf_hunt_hare_dug_in() {
-	// Set delta time
-	var dt_ = delta_time;
-	
 	// Set the move state for the Wolf, which sets the sprite
 	wolfCurrentMoveState = wolfMoveState.run;
 	
-	// Firstly, set variables used by move_wolf() function, called after this function is in
+	// Set variables used by move_wolf() function, called after this function is in
 	// the Wolf step event.
-	
+	targetToMoveToX = lastKnownX;
+	targetToMoveToY = lastKnownY;
 	
 	// If the point distance between the player's last known location and the Wolf is
-	// less than the distance it'll take the Wolf to reach that location in half a second,
+	// less than the distance it'll take the Wolf to reach that location in 1/5 of a second,
 	// change to small patrol state, which slowly patrols around it's current position,
 	// looking for the player.
-	if point_distance(x, y, lastKnownX, lastKnownY) <= (currentMovementSpeed / 2) {
+	if point_distance(x, y, lastKnownX, lastKnownY) <= (currentMovementSpeed / 5) {
 		hasReachedLastKnownLocation = true;
 		searchingForDugInHareCurrentTimer = searchingForDugInHareMaxTimer;
+		wolfRandomPatrolRouteX = lastKnownX + irandom_range((wolfSmallPatrolRandomRouteRange * -1), wolfSmallPatrolRandomRouteRange);
+		wolfRandomPatrolRouteY = lastKnownY + irandom_range((wolfSmallPatrolRandomRouteRange * -1), wolfSmallPatrolRandomRouteRange);
 		wolfCurrentAction = wolfActionState.smallpatrol;
+		wolfCurrentMoveState = wolfMoveState.walk;
+		wolfReturnToPatrolStart = false;
 	}
 }
 
@@ -136,12 +173,20 @@ function wolf_hunt_hare_dug_in() {
 ///@function wolf_big_patrol();
 ///@description State for Wolf patrolling.
 function wolf_big_patrol() {
-	// Set delta time
-	var dt_ = delta_time;
-	
 	// Set the move state for the Wolf, which sets the sprite
 	wolfCurrentMoveState = wolfMoveState.walk;
 	
+	// If the Wolf gets within range of the target patrol route to move to, idle for a moment.
+	if point_distance(x, y, targetToMoveToX, targetToMoveToY) < (currentMaxSpeed / 5) {
+		wolfCurrentMoveState = wolfMoveState.stand;
+		idleStateToReturnTo = wolfCurrentAction;
+		wolfCurrentAction = wolfActionState.idle;
+		idleTimerCurrentTime = irandom_range(0, wolfPatrolIdleTime);
+	}
+	
+	// I don't set targetToMoveToX and targetToMoveToY in this function because I want those
+	// variables to only be set once, at the beginning when the state is first sent to big
+	// patrol state.
 }
 
 
@@ -150,16 +195,25 @@ function wolf_big_patrol() {
 ///				location.
 function wolf_small_patrol() {
 	// Set delta time
-	var dt_ = delta_time;
+	var dt_ = delta_time / 1000000;
 	
 	// Set the move state for the Wolf, which sets the sprite
-	wolfCurrentMoveState = wolfMoveState.run;
+	wolfCurrentMoveState = wolfMoveState.walk;
 	
-	// Firstly, set variables used by move_wolf() function, called after this function is in
-	// the Wolf step event.
+	// If the Wolf gets within range of the target patrol route to move to, idle for a moment.
+	if point_distance(x, y, targetToMoveToX, targetToMoveToY) < (currentMaxSpeed / 5) {
+		wolfCurrentMoveState = wolfMoveState.stand;
+		idleStateToReturnTo = wolfCurrentAction;
+		wolfCurrentAction = wolfActionState.idle;
+		idleTimerCurrentTime = irandom_range(0, wolfPatrolIdleTime);
+	}
+	
+	// I don't set targetToMoveToX and targetToMoveToY in this function because I want those
+	// variables to only be set once, at the beginning when the state is first sent to big
+	// patrol state.
 	
 	// Count down the wolf timer if the timer is still above 0
-	if searchingForDugInHareCurrentTimer >= 0 {
+	if (searchingForDugInHareCurrentTimer >= 0) && (isOnScreen) {
 		searchingForDugInHareCurrentTimer -= dt_;
 	}
 	// If the timer runs out, set the Wolf to return back to it's normal patrol route.
@@ -167,8 +221,13 @@ function wolf_small_patrol() {
 		canSeePlayer = false;
 		hasReachedLastKnownLocation = false;
 		wolfCurrentAction = wolfActionState.returntopatrol;
+		// Here I do in fact set targetToMoveToX and targetToMoveToY because this will
+		// only execute once, at the start of the return to the patrol route.
+		targetToMoveToX = wolfRandomPatrolRouteX;
+		targetToMoveToY = wolfRandomPatrolRouteY;
 		idleStateToReturnTo = wolfActionState.returntopatrol;
 		wolfReturnToPatrolStart = true;
+		searchingForDugInHareCurrentTimer = 0;
 	}
 }
 
@@ -177,11 +236,14 @@ function wolf_small_patrol() {
 ///@description State for Wolf returning to patrol path after losing track of player.
 function wolf_return_to_patrol() {
 	// Set delta time
-	var dt_ = delta_time;
+	var dt_ = delta_time / 1000000;
 	
 	// Set the move state for the Wolf, which sets the sprite
 	wolfCurrentMoveState = wolfMoveState.run;
 	
+	// Set the target to move to variables
+	targetToMoveToX = wolfBigPatrolRouteStartX;
+	targetToMoveToY = wolfBigPatrolRouteStartY;
 }
 
 
