@@ -51,6 +51,7 @@
     {"id":{"name":"spr_player_snow_hare_top_up","path":"sprites/spr_player_snow_hare_top_up/spr_player_snow_hare_top_up.yy",},},
     {"id":{"name":"obj_wolf","path":"objects/obj_wolf/obj_wolf.yy",},},
     {"id":{"name":"spr_player_human_left","path":"sprites/spr_player_human_left/spr_player_human_left.yy",},},
+    {"id":{"name":"set_wolf_direction","path":"scripts/set_wolf_direction/set_wolf_direction.yy",},},
     {"id":{"name":"spr_player_snow_hare_top_right","path":"sprites/spr_player_snow_hare_top_right/spr_player_snow_hare_top_right.yy",},},
     {"id":{"name":"wolf_states","path":"scripts/wolf_states/wolf_states.yy",},},
     {"id":{"name":"spr_player_human_right","path":"sprites/spr_player_human_right/spr_player_human_right.yy",},},

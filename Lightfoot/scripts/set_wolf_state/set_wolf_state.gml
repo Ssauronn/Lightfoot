@@ -41,7 +41,7 @@ function set_wolf_state() {
 		}
 		// As long as the Wolf isn't both patrolling already and the player's current form is dug into snow,
 		// check to see if the Wolf can smell the player in Snow Hare form, and if so, mark it as such
-		else if point_distance(x, y, targetX, targetY) <= smellRange {
+		else if point_distance(x, y, target.x, target.y) <= smellRange {
 			if obj_player.playerCurrentForm == forms.snowharetop {
 				canSeePlayer = true;
 			}
@@ -71,9 +71,15 @@ function set_wolf_state() {
 		else if obj_player.playerCurrentForm == forms.snowharetop {
 			wolfCurrentAction = wolfActionState.huntingharetop;
 		}
-		// Else if the player is in Snow Hare form, dug into the snow
-		else if obj_player.playerCurrentForm == forms.snowharedugin {
-			wolfCurrentAction = wolfActionState.huntingharedugin;
+		// Else if the player is in Snow Hare form, dug into the snow, and the 
+		// Wolf is confirmed to be on screen
+		else if (obj_player.playerCurrentForm == forms.snowharedugin) && (isOnScreen) {
+			// If the Wolf's current action is currently hunting a Snow Hare on top, then
+			// this means it's the Wolf's first time being sent to this phase and I should
+			// change the state.
+			if wolfCurrentAction == wolfActionState.huntingharetop {
+				wolfCurrentAction = wolfActionState.huntingharedugin;
+			}
 		}
 	}
 	// Else if the Wolf can't see the player
@@ -81,6 +87,13 @@ function set_wolf_state() {
 		if wolfCurrentAction != wolfActionState.bigpatrol {
 			wolfCurrentAction = wolfActionState.returntopatrol;
 		}
+	}
+	
+	// Finally, check to see if the Wolf has already reached the player's last known location and is
+	// now searching for the dug in player, and the timer for that search has ran out
+	if (wolfCurrentAction == wolfActionState.smallpatrol) && (searchingForDugInHareCurrentTimer <= 0) {
+		canSeePlayer = false;
+		wolfCurrentAction = wolfActionState.returntopatrol;
 	}
 	
 	/// Runs the correct action script based on the state set above.

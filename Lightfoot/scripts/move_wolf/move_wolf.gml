@@ -28,11 +28,20 @@ function move_wolf(x_, y_) {
 			currentMaxSpeed = maxRunSpeed;
 			break;
 	}
+	// Set the acceleration value for the Wolf based on it's current max speed allowed.
+	wolfAcceleration = currentMaxSpeed * 4;
 	
 	/// Set variables for the sprite table
-	// As long as the wolf isn't idling, or patrolling, then set the
-	// Wolf direction equal to the player direction.
-	if ((wolfCurrentAction != wolfActionState.idle) && (wolfCurrentAction != wolfActionState.huntingharedugin) && (wolfCurrentAction != wolfActionState.bigpatrol) && (wolfCurrentAction != wolfActionState.smallpatrol) && (wolfCurrentAction != wolfActionState.returntopatrol)) {
-		
+	// As long as the wolf isn't idling, set the Wolf direction facing equal to the direction
+	// from the Wolf to the provided x_ and y_ values.
+	if wolfCurrentAction != wolfActionState.idle {
+		set_wolf_direction(x_, y_);
+	}
+	// Otherwise, if the Wolf is idle, don't move at all and just exit this movement function.
+	else {
+		currentMaxSpeed = 0;
+		currentSpeed = 0;
+		wolfAcceleration = 0;
+		exit;
 	}
 }

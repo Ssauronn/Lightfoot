@@ -13,6 +13,7 @@
     {"name":"move_wolf","order":2,"path":"scripts/move_wolf/move_wolf.yy",},
     {"name":"spr_player_snow_hare_top_up","order":5,"path":"sprites/spr_player_snow_hare_top_up/spr_player_snow_hare_top_up.yy",},
     {"name":"spr_player_human_left","order":3,"path":"sprites/spr_player_human_left/spr_player_human_left.yy",},
+    {"name":"set_wolf_direction","order":3,"path":"scripts/set_wolf_direction/set_wolf_direction.yy",},
     {"name":"spr_player_snow_hare_top_right","order":6,"path":"sprites/spr_player_snow_hare_top_right/spr_player_snow_hare_top_right.yy",},
     {"name":"wolf_states","order":1,"path":"scripts/wolf_states/wolf_states.yy",},
     {"name":"spr_player_human_right","order":2,"path":"sprites/spr_player_human_right/spr_player_human_right.yy",},

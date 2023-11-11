@@ -23,3 +23,5 @@ function find_nearest_bonfire(x_, y_) {
 	}
 	else return noone;
 }
+
+
