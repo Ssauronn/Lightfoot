@@ -2,8 +2,11 @@
   "FolderOrderSettings": [
     {"name":"Internal Functions","order":3,"path":"folders/Scripts/Internal Functions.yy",},
     {"name":"Wolf States","order":2,"path":"folders/Scripts/Wolf States.yy",},
+    {"name":"Dialogue Box","order":4,"path":"folders/Scripts/Dialogue Box.yy",},
   ],
   "ResourceOrderSettings": [
+    {"name":"spr_dialogue_background","order":19,"path":"sprites/spr_dialogue_background/spr_dialogue_background.yy",},
+    {"name":"parse_string","order":1,"path":"scripts/parse_string/parse_string.yy",},
     {"name":"obj_ui","order":1,"path":"objects/obj_ui/obj_ui.yy",},
     {"name":"spr_wolf","order":2,"path":"sprites/spr_wolf/spr_wolf.yy",},
     {"name":"spr_freeze_bar_foreground","order":17,"path":"sprites/spr_freeze_bar_foreground/spr_freeze_bar_foreground.yy",},
