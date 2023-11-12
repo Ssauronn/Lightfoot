@@ -7,6 +7,13 @@ if keyboard_check_pressed(vk_escape) {
 if gameStartTimer > 0 {
 	gameStartTimer--;
 }
+if gameStartTimer <= 0 {
+	startGameButtonX = viewX + (viewW / 2) - (sprite_get_width(spr_button_background) / 2);
+	startGameButtonY = viewY + (viewH / 2) - ((sprite_get_height(spr_button_background)) / 2);
+	startGameSmallButtonX = startGameButtonX + ((sprite_get_width(spr_button_background) - (sprite_get_width(spr_button_background) * startGameSmallButtonScale)) / 2)
+	startGameSmallButtonFirstY = startGameButtonY + (8 * (viewH / 32));
+	startGameSmallButtonSecondY = startGameButtonY + (13 * (viewH / 32));
+}
 
 if room == GameRoom {
 	// Execute regular code as long as the game isn't paused
@@ -77,17 +84,106 @@ else if room == MainMenu {
 		if mainMenuSelectionScreenActive {
 			// Check for button clicks on button locations.
 			// If button clicks occur, set different selection screens as active.
+			if mouse_check_button(mb_left) {
+				if point_in_rectangle(mouse_x, mouse_y, startGameButtonX, startGameButtonY, startGameButtonX + sprite_get_width(spr_button_background), startGameButtonY + sprite_get_height(spr_button_background) + (2 * (viewH / 32))) {
+					startGameButtonClickedOn = 1;
+				}
+				else if point_in_rectangle(mouse_x, mouse_y, startGameSmallButtonX, startGameSmallButtonFirstY, startGameSmallButtonX + (sprite_get_width(spr_button_background) * startGameSmallButtonScale), startGameSmallButtonFirstY + (sprite_get_height(spr_button_background) * startGameSmallButtonScale)) {
+					startGameButtonClickedOn = 2;
+				}
+				else if point_in_rectangle(mouse_x, mouse_y, startGameSmallButtonX, startGameSmallButtonSecondY, startGameSmallButtonX + (sprite_get_width(spr_button_background) * startGameSmallButtonScale), startGameSmallButtonSecondY + (sprite_get_height(spr_button_background) * startGameSmallButtonScale)) {
+					startGameButtonClickedOn = 3;
+				}
+				else {
+					startGameButtonClickedOn = 0;
+				}
+			}
 			
+			// Send to proper state once button is released
+			if mouse_check_button_released(mb_left) {
+				switch startGameButtonClickedOn {
+					case 1:
+						mainMenuActive = false;
+						mainMenuSelectionScreenActive = false;
+						mainMenuSettingsScreenActive = false;
+						mainMenuControlsScreenActive = false;
+						startGameButtonClickedOn = 0;
+						room_goto_next();
+						break;
+					case 2:
+						mainMenuSelectionScreenActive = false;
+						mainMenuSettingsScreenActive = true;
+						startGameButtonClickedOn = 0;
+						break;
+					case 3:
+						mainMenuSelectionScreenActive = false;
+						mainMenuControlsScreenActive = true;
+						startGameButtonClickedOn = 0;
+						break;
+				}
+			}
+			
+			// Reset the button variable
+			if !mouse_check_button(mb_left) {
+				startGameButtonClickedOn = 0;
+			}
 		}
 		else if mainMenuSettingsScreenActive {
 			// Check for button clicks on button locations.
 			// If button clicks occur, set different selection screens as active, or adjust available settings.
+			if point_in_rectangle(mouse_x, mouse_y, startGameButtonX, startGameButtonY, startGameButtonX + sprite_get_width(spr_button_background), startGameButtonY + sprite_get_height(spr_button_background) + (2 * (viewH / 32))) {
+				startGameButtonClickedOn = 1;
+			}
+			else if point_in_rectangle(mouse_x, mouse_y, startGameSmallButtonX, startGameSmallButtonSecondY, startGameSmallButtonX + (sprite_get_width(spr_button_background) * startGameSmallButtonScale), startGameSmallButtonSecondY + (sprite_get_height(spr_button_background) * startGameSmallButtonScale)) {
+				startGameButtonClickedOn = 3;
+			}
+			else {
+				startGameButtonClickedOn = 0;
+			}
 			
+			// Send to proper state once button is released
+			if mouse_check_button_released(mb_left) {
+				switch startGameButtonClickedOn {
+					case 1:
+						soundMute = !soundMute;
+						startGameButtonClickedOn = 0;
+						break;
+					case 3:
+						mainMenuSelectionScreenActive = true;
+						mainMenuSettingsScreenActive = false;
+						startGameButtonClickedOn = 0;
+						break;
+				}
+			}
+			
+			// Reset the button variable
+			if !mouse_check_button(mb_left) {
+				startGameButtonClickedOn = 0;
+			}
 		}
 		else if mainMenuControlsScreenActive {
 			// Check for button click going back to Main Selection Screen.
 			// Everything else in this screen is read only.
+			if point_in_rectangle(mouse_x, mouse_y, startGameSmallButtonX, startGameSmallButtonSecondY, startGameSmallButtonX + (sprite_get_width(spr_button_background) * startGameSmallButtonScale), startGameSmallButtonSecondY + (sprite_get_height(spr_button_background) * startGameSmallButtonScale)) {
+				startGameButtonClickedOn = 3;
+			}
+			else {
+				startGameButtonClickedOn = 0;
+			}
 			
+			// Send to proper state once button is released
+			if mouse_check_button_released(mb_left) {
+				if startGameButtonClickedOn == 3 {
+					mainMenuSelectionScreenActive = true;
+					mainMenuControlsScreenActive = false;
+					startGameButtonClickedOn = 0;
+				}
+			}
+			
+			// Reset the button variable
+			if !mouse_check_button(mb_left) {
+				startGameButtonClickedOn = 0;
+			}
 		}
 	}
 }

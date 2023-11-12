@@ -1,7 +1,9 @@
 /// @description Initialize Variables
 /// Pausing Game
 globalvar gamePaused;
+globalvar = playerDied;
 gamePaused = false;
+playerDied = false;
 
 /// Freeze Bar Values
 freezeBarActive = true;
@@ -17,6 +19,9 @@ warmthDistance = 320;
 warmthRegeneration = 2;
 objectiveCount = 0;
 
+/// Sound muted
+soundMute = false;
+
 /// Menu values
 buttonHeldDown = false;
 splashscreenActive = false;
@@ -28,6 +33,13 @@ splashscreenIdleTimerCurrentTime = 0;
 percentToFadeSplashScreen = 0;
 mainMenuActive = false;
 mainMenuSelectionScreenActive = false;
+startGameButtonX = 0;
+startGameButtonY = 0;
+startGameSmallButtonScale = 0.75;
+startGameSmallButtonX = 0;
+startGameSmallButtonFirstY = 0;
+startGameSmallButtonSecondY = 0;
+startGameButtonClickedOn = 0;
 mainMenuSettingsScreenActive = false;
 mainMenuControlsScreenActive = false;
 pauseMenuActive = false;
@@ -35,7 +47,7 @@ deathScreenActive = false;
 
 /// Tutorial values
 // Whether or not tutorials should run in the first place, set by the player in settings
-tutorialsActive = false;
+tutorialsActive = true;
 // The divider for this timer is how many characters should appear on screen per second.
 dialogueCharacterAppearTimerStart = room_speed / 60;
 dialogueCharacterFastAsFuck = false;
