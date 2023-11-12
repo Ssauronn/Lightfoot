@@ -18,6 +18,8 @@ warmthRegeneration = 2;
 objectiveCount = 0;
 
 /// Tutorial values
+// Whether or not tutorials should run in the first place, set by the player in settings
+tutorialsActive = false;
 // The divider for this timer is how many characters should appear on screen per second.
 dialogueCharacterAppearTimerStart = room_speed / 60;
 dialogueCharacterFastAsFuck = false;
@@ -78,11 +80,11 @@ ds_grid_add(tutorialsGrid, 3, 6, "More wolves. I need to move faster than this."
 ds_grid_add(tutorialsGrid, 0, 7, 2);
 ds_grid_add(tutorialsGrid, 1, 7, 3);
 ds_grid_add(tutorialsGrid, 2, 7, noone);
-ds_grid_add(tutorialsGrid, 3, 7, "My Druid form is a Snow Hare... a wolf's primary prey. But at least it's faster than this.");
+ds_grid_add(tutorialsGrid, 3, 7, "My Druid form is a Snow Hare... a WOLF'S PRIMARY PREY. But at least it's faster than this.");
 ds_grid_add(tutorialsGrid, 0, 8, 3);
 ds_grid_add(tutorialsGrid, 1, 8, 3);
 ds_grid_add(tutorialsGrid, 2, 8, noone);
-ds_grid_add(tutorialsGrid, 3, 8, "Time to RUN!!! (LEFT CLICK to turn into a Snow Hare)");
+ds_grid_add(tutorialsGrid, 3, 8, "Time to RUN!!! (LEFT CLICK to turn into a SNOW HARE)");
 #endregion
 #region When any wolf gets close enough to be a threat the first time
 ds_grid_add(tutorialsGrid, 0, 9, 1);
