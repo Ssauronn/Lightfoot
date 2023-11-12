@@ -17,6 +17,22 @@ warmthDistance = 320;
 warmthRegeneration = 2;
 objectiveCount = 0;
 
+/// Menu values
+buttonHeldDown = false;
+splashscreenActive = false;
+splashscreenOccured = false;
+splashscreenFadeInTimerStartTime = 2 * room_speed;
+splashscreenFadeInTimerCurrentTime = 0;
+splashscreenIdleTimerStartTime = 2 * room_speed;
+splashscreenIdleTimerCurrentTime = 0;
+percentToFadeSplashScreen = 0;
+mainMenuActive = false;
+mainMenuSelectionScreenActive = false;
+mainMenuSettingsScreenActive = false;
+mainMenuControlsScreenActive = false;
+pauseMenuActive = false;
+deathScreenActive = false;
+
 /// Tutorial values
 // Whether or not tutorials should run in the first place, set by the player in settings
 tutorialsActive = false;
