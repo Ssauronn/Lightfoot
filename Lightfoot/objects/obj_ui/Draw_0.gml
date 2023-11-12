@@ -1,7 +1,4 @@
 ///@description Draw To World
-// Delta Time
-var dt_ = delta_time / 1000000;
-
 // Bonfire Icon
 var current_objective_, bonfire_to_move_to_;
 bonfire_to_move_to_ = noone;
@@ -22,4 +19,5 @@ if (bonfire_to_move_to_ != noone) && (!rectangle_in_rectangle(bonfire_to_move_to
 	sprite_scale_ = clamp(sprite_scale_, 0.2, 0.5);
 	draw_sprite_ext(spr_bonfire, 0, bicon_x_, bicon_y_, sprite_scale_, sprite_scale_, 0, c_white, 1);
 }
+
 
