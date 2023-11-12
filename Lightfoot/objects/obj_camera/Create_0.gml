@@ -35,7 +35,6 @@ if idealHeight & 1 {
 window_set_size(idealWidth, idealHeight);
 display_set_gui_size(idealWidth * 2, idealHeight * 2);
 surface_resize(application_surface, idealWidth, idealHeight);
-
 alarm[0] = 1;
 
 // Camera variables

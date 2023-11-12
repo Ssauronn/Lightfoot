@@ -58,6 +58,7 @@
     {"id":{"name":"spr_player_human_down","path":"sprites/spr_player_human_down/spr_player_human_down.yy",},},
     {"id":{"name":"spr_player_snow_hare_dug_in_down","path":"sprites/spr_player_snow_hare_dug_in_down/spr_player_snow_hare_dug_in_down.yy",},},
     {"id":{"name":"spr_player_snow_hare_dug_in_left","path":"sprites/spr_player_snow_hare_dug_in_left/spr_player_snow_hare_dug_in_left.yy",},},
+    {"id":{"name":"spr_identify_point","path":"sprites/spr_identify_point/spr_identify_point.yy",},},
     {"id":{"name":"ToDoList","path":"notes/ToDoList/ToDoList.yy",},},
     {"id":{"name":"obj_bonfire","path":"objects/obj_bonfire/obj_bonfire.yy",},},
     {"id":{"name":"spr_freeze_bar_background","path":"sprites/spr_freeze_bar_background/spr_freeze_bar_background.yy",},},

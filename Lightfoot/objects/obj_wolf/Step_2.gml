@@ -24,7 +24,6 @@ if canSeePlayer {
 			with obj_wolf {
 				if isOnScreen || (obj_player.playerCurrentForm == forms.snowharetop && canSeePlayer) {
 					if self.id != self_id_ {
-						inPack = true;
 						self_id_.inPack = true;
 					}
 				}
