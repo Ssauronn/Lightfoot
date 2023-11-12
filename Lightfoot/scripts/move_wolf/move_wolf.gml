@@ -12,9 +12,6 @@ function move_wolf(x_, y_) {
 		case wolfActionState.circlehuman:
 			currentMaxSpeed = maxWalkSpeed / 2;
 			break;
-		case wolfActionState.huntinghuman:
-			currentMaxSpeed = maxWalkSpeed;
-			break;
 		case wolfActionState.huntingharetop:
 			currentMaxSpeed = maxRunSpeed;
 			break;
@@ -30,6 +27,16 @@ function move_wolf(x_, y_) {
 		case wolfActionState.returntopatrol:
 			currentMaxSpeed = maxRunSpeed;
 			break;
+	}
+	// Separate check and setting for hunting the human based on whether the Wolf is in a pack
+	// or not.
+	if wolfCurrentAction == wolfActionState.huntinghuman {
+		if inPack {
+			currentMaxSpeed = maxRunSpeed;
+		}
+		else {
+			currentMaxSpeed = maxWalkSpeed;
+		}
 	}
 	// Set the acceleration value for the Wolf based on it's current max speed allowed.
 	wolfAcceleration = currentMaxSpeed * 4;
@@ -64,6 +71,7 @@ function move_wolf(x_, y_) {
 	// Check for nearest wolf object by temporarily shifting the Wolf away from it's position,
 	// then checking for an instance of the nearest Wolf object to it's original position,
 	// finally followed by moving back to it's original position.
+	// This doesn't execute if the Wolf is patrolling, to avoid weird quirks in pathfinding.
 	var nearest_object_, original_x_;
 	original_x_ = x;
 	var distance_to_check_for_ = (sprite_get_width(sprite_index) * 1.5) + 1;

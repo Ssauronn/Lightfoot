@@ -2,7 +2,7 @@
 /// Freeze Bar Values
 freezeBarActive = true;
 // How many seconds it'll take the freeze bar, while freezing, to decay
-freezeBarMaxValue = 60;
+freezeBarMaxValue = 45;
 freezeBarCurrentValue = freezeBarMaxValue;
 freezeBarDecays = true;
 freezeBarHitZero = false;
@@ -11,4 +11,6 @@ warmthDistance = 320;
 // The time, in seconds, it would take a fully depleted bar to replenish
 // while standing within range of a bonfire.
 warmthRegeneration = 2;
+objectiveCount = 0;
+
 
