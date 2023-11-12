@@ -23,12 +23,19 @@ if !gamePaused {
 	}
 	// Swap freely between digging out and in of snow by pressing Spacebar
 	if keyboard_check_pressed(vk_space) {
+		var form_changed_ = false;
 		if obj_ui.firstTimeDugInSnowTutorialComplete {
 			if playerCurrentForm == forms.snowharetop {
+				form_changed_ = true;
 				playerCurrentForm = forms.snowharedugin;
 			}
-			else if playerCurrentForm == forms.snowharedugin {
-				playerCurrentForm = forms.snowharetop;
+		}
+		if obj_ui.firstTimeEscapingWolvesTutorialComplete {
+			if !form_changed_ {
+				if playerCurrentForm == forms.snowharedugin {
+					form_changed_ = true;
+					playerCurrentForm = forms.snowharetop;
+				}
 			}
 		}
 	}

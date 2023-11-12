@@ -1,8 +1,8 @@
 {
   "FolderOrderSettings": [
+    {"name":"Dialogue Box","order":4,"path":"folders/Scripts/Dialogue Box.yy",},
     {"name":"Internal Functions","order":3,"path":"folders/Scripts/Internal Functions.yy",},
     {"name":"Wolf States","order":2,"path":"folders/Scripts/Wolf States.yy",},
-    {"name":"Dialogue Box","order":4,"path":"folders/Scripts/Dialogue Box.yy",},
   ],
   "ResourceOrderSettings": [
     {"name":"spr_dialogue_background","order":19,"path":"sprites/spr_dialogue_background/spr_dialogue_background.yy",},
