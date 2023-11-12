@@ -6,7 +6,7 @@ var dt_ = delta_time / 1000000;
 sprite_index = wolfSprite[wolfCurrentMoveState, wolfCurrentDirection];
 
 // Check after movement to make sure it's still on screen. If it's not, mark it as such.
-if rectangle_in_rectangle(x, y, x + sprite_get_width(sprite_index), y + sprite_get_height(sprite_index), viewX, viewY, viewX + viewW, viewY + viewH) != 0 {
+if rectangle_in_rectangle(x, y, x + sprite_get_width(sprite_index), y + sprite_get_height(sprite_index), viewX + 128, viewY + 128, viewX + viewW - 128 - sprite_width, viewY + viewH - 128 - sprite_height) != 0 {
 	isOnScreen = true;
 }
 else {
@@ -24,7 +24,6 @@ if canSeePlayer {
 			with obj_wolf {
 				if isOnScreen || (obj_player.playerCurrentForm == forms.snowharetop && canSeePlayer) {
 					if self.id != self_id_ {
-						inPack = true;
 						self_id_.inPack = true;
 					}
 				}

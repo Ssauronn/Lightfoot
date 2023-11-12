@@ -1,4 +1,8 @@
-/// @description Freeze Bar and Tutorials
+/// @description Draw To GUI
+// Delta Time
+var dt_ = delta_time / 1000000;
+
+/// Freeze Bar
 if freezeBarActive {
 	if !freezeBarHitZero {
 		var freeze_bar_x_ = 32;
