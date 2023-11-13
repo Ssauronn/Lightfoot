@@ -11,7 +11,7 @@ if room == GameRoom {
 			var percent_to_draw_ = (freezeBarCurrentValue / freezeBarMaxValue) * sprite_get_width(spr_freeze_bar_foreground);
 			/// ADJUST - the color here should be set by a shader that rotates from orange to deep blue
 			var color_of_freeze_bar_ = c_red;
-			draw_sprite(spr_freeze_bar_border, 0, freeze_bar_x_ - 2, freeze_bar_y_ - 2);
+			draw_sprite(spr_freeze_bar_border, 0, freeze_bar_x_ - 10, freeze_bar_y_ - 10);
 			draw_sprite(spr_freeze_bar_background, 0, freeze_bar_x_, freeze_bar_y_);
 		
 			// Shader to shift color of Freeze Bar status
@@ -33,6 +33,9 @@ if room == GameRoom {
 			dialogueTreeMaxChain = ds_grid_get(tutorialsGrid, 1, 0);
 			if gameStartTimer <= 0 {
 				gamePaused = true;
+				if dialogueTreeCurrentChain == 2 {
+					draw_sprite_ext(spr_glow_inner, 0, 32 + (sprite_get_width(spr_freeze_bar_foreground) / 2), 32 + (sprite_get_height(spr_freeze_bar_foreground) / 2), 0.5, 0.5, 0, c_blue, iconAlpha);
+				}
 				play_dialogue(ds_grid_get(tutorialsGrid, 3, (0 + dialogueTreeCurrentChain - 1)));
 				if dialogueTreeCurrentChain > dialogueTreeMaxChain {
 					dialogueTreeCurrentChain = 1;
