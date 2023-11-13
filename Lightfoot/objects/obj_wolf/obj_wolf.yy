@@ -30,10 +30,7 @@
   "physicsStartAwake": true,
   "properties": [],
   "solid": false,
-  "spriteId": {
-    "name": "spr_wolf",
-    "path": "sprites/spr_wolf/spr_wolf.yy",
-  },
+  "spriteId": null,
   "spriteMaskId": null,
   "visible": true,
 }

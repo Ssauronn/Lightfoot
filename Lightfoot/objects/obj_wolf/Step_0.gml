@@ -5,7 +5,7 @@ if !gamePaused {
 		target.x = target.x
 		target.y = target.y;
 	}
-
+	
 	/// Sets the Wolf's state based on it's position relative to the player and screen, and
 	/// based additional based on the player's current form.
 	// First, however, I check to make sure the player isn't within range of a Bonfire.

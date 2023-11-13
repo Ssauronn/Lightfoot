@@ -20,6 +20,8 @@ wolfAcceleration = currentMaxSpeed * 4;
 currentSpeed = 0;
 targetToMoveToX = -1;
 targetToMoveToY = -1;
+xVector = 0;
+yVector = 0;
 
 /// Circling around player variables
 // Set it so that each Wolf always chooses to circle in one direction, but that direction
@@ -86,18 +88,12 @@ enum wolfDirection {
 }
 
 /// Sprite table
-wolfSprite[wolfMoveState.walk, wolfDirection.right] = spr_wolf;
-wolfSprite[wolfMoveState.walk, wolfDirection.up] = spr_wolf;
-wolfSprite[wolfMoveState.walk, wolfDirection.left] = spr_wolf;
-wolfSprite[wolfMoveState.walk, wolfDirection.down] = spr_wolf;
-wolfSprite[wolfMoveState.run, wolfDirection.right] = spr_wolf;
-wolfSprite[wolfMoveState.run, wolfDirection.up] = spr_wolf;
-wolfSprite[wolfMoveState.run, wolfDirection.left] = spr_wolf;
-wolfSprite[wolfMoveState.run, wolfDirection.down] = spr_wolf;
-wolfSprite[wolfMoveState.stand, wolfDirection.right] = spr_wolf;
-wolfSprite[wolfMoveState.stand, wolfDirection.up] = spr_wolf;
-wolfSprite[wolfMoveState.stand, wolfDirection.left] = spr_wolf;
-wolfSprite[wolfMoveState.stand, wolfDirection.down] = spr_wolf;
+wolfSprite[wolfMoveState.walk, wolfDirection.right] = spr_wolf_right;
+wolfSprite[wolfMoveState.walk, wolfDirection.left] = spr_wolf_left;
+wolfSprite[wolfMoveState.run, wolfDirection.right] = spr_wolf_right;
+wolfSprite[wolfMoveState.run, wolfDirection.left] = spr_wolf_left;
+wolfSprite[wolfMoveState.stand, wolfDirection.right] = spr_wolf_right;
+wolfSprite[wolfMoveState.stand, wolfDirection.left] = spr_wolf_left;
 
 /// Variables used to control sprites and states on the fly
 wolfCurrentAction = wolfActionState.idle;
