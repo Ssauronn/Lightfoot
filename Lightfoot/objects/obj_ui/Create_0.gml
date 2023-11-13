@@ -1,9 +1,14 @@
 /// @description Initialize Variables
 /// Pausing Game
 globalvar gamePaused;
-globalvar = playerDied;
+globalvar playerDied;
 gamePaused = false;
 playerDied = false;
+
+// Death Values
+playerDiedTimerStartTime = 2 * room_speed;
+playerDiedTimerCurrentTime = 0;
+percentToFadeToDeathScreen = 0;
 
 /// Freeze Bar Values
 freezeBarActive = true;
@@ -24,6 +29,7 @@ soundMute = false;
 
 /// Menu values
 buttonHeldDown = false;
+quitGameButtonPressed = false;
 splashscreenActive = false;
 splashscreenOccured = false;
 splashscreenFadeInTimerStartTime = 2 * room_speed;
@@ -44,6 +50,7 @@ mainMenuSettingsScreenActive = false;
 mainMenuControlsScreenActive = false;
 pauseMenuActive = false;
 deathScreenActive = false;
+deathText = "You Froze to Death."
 
 /// Tutorial values
 // Whether or not tutorials should run in the first place, set by the player in settings

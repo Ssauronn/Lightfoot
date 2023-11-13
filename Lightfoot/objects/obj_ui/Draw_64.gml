@@ -26,7 +26,7 @@ if room == GameRoom {
 	}
 
 	/// Tutorials
-	if tutorialsActive {
+	if tutorialsActive && !pauseMenuActive {
 		#region Beginning Tutorial
 		if !openingTutorialComplete {
 			// Execute the opening tutorial once the game starts and is initialized.
@@ -216,7 +216,8 @@ if room == GameRoom {
 		#endregion
 		#endregion
 	}
-	else {
+	// Only disable tutorials if tutorials are disabled in settings
+	else if !tutorialsActive {
 		openingTutorialComplete = true;
 		firstWolfSeenTutorialComplete = true;
 		firstWolfSeenInPackTutorialComplete = true;

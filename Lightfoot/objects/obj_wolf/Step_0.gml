@@ -13,10 +13,14 @@ if !gamePaused {
 	if isOnScreen || ((obj_player.playerCurrentForm == forms.snowharetop) && canSeePlayer) {
 		set_wolf_state();
 	}
-
-
+	
 	/// Moves the wolf based on variables set in set_wolf_state();
 	move_wolf(targetToMoveToX, targetToMoveToY);
+}
+/// Kill player if it gets close enough.
+if point_distance(x, y, obj_player.x, obj_player.y) < rangeToKillPlayer {
+	playerDied = true;
+	obj_ui.deathText = "You were eaten."
 }
 
 

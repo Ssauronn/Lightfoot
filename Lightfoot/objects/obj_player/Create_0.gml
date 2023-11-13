@@ -16,7 +16,7 @@ snowHareDugInAcceleration = snowHareDugInMaxMovementSpeed * 3;
 
 /// Form states
 // Cooldown here given in seconds
-formMaxCooldown = 4;
+formMaxCooldown = 0.5;
 formCooldown = 0;
 
 // Variable used to store the player's last known location (the spot where they dug into the snow)

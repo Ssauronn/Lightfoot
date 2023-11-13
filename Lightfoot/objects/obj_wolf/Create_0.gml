@@ -10,6 +10,7 @@ target = obj_player.id;
 inPack = false;
 canSeePlayer = false;
 isOnScreen = false;
+rangeToKillPlayer = 48;
 
 /// Movement
 maxWalkSpeed = target.humanMaxMovementSpeed - 32;
@@ -51,8 +52,8 @@ wolfPatrolIdleTime = 2;
 // Max timer given in seconds
 searchingForDugInHareMaxTimer = 6;
 searchingForDugInHareCurrentTimer = 0;
-smellRange = room_height / 4;
-hearingRange = 1 * sprite_get_width(spr_player_human_up);
+smellRange = room_height / 8;
+hearingRange = 80;
 
 /// Idle state variables, which are used often and exclusive to the Idle state
 idleTimerStartTime = 0;
