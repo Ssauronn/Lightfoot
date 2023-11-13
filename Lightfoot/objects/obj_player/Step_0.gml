@@ -126,17 +126,6 @@ if !gamePaused {
 	if vertical_ != 0 {
 		// Move the player
 		y += lengthdir_y(currentMovementSpeed * dt_, point_direction(0, 0, diagonal_, vertical_));
-		// Then set direction enum, which will affect sprite setting
-		if !playerCurrentDirectionAlreadySet {
-			switch vertical_ {
-				case 1:
-					playerCurrentDirection = playerDirection.down;
-					break;
-				case -1:
-					playerCurrentDirection = playerDirection.up;
-					break;
-			}
-		}
 	}
 	if horizontal_ != 0 {
 		// Move the player
@@ -171,12 +160,6 @@ if !gamePaused {
 	}
 	if (horizontal_ == -1) && ((playerCurrentDirection == playerDirection.right) || (vertical_ = 0)) {
 		playerCurrentDirection = playerDirection.left;
-	}
-	if (vertical_ == 1) && ((playerCurrentDirection == playerDirection.up) || (horizontal_ == 0)) {
-		playerCurrentDirection = playerDirection.down;
-	}
-	if (vertical_ == -1) && ((playerCurrentDirection == playerDirection.down) || (horizontal_ == 0)) {
-		playerCurrentDirection = playerDirection.up;
 	}
 	#endregion
 }

@@ -13,10 +13,10 @@ function move_wolf(x_, y_) {
 			currentMaxSpeed = maxWalkSpeed / 2;
 			break;
 		case wolfActionState.huntingharetop:
-			currentMaxSpeed = maxRunSpeed;
+			currentMaxSpeed = maxRunSpeed * 0.85;
 			break;
 		case wolfActionState.huntingharedugin:
-			currentMaxSpeed = maxWalkSpeed;
+			currentMaxSpeed = maxWalkSpeed * 0.75;
 			break;
 		case wolfActionState.bigpatrol:
 			currentMaxSpeed = maxWalkSpeed / 3;
@@ -90,6 +90,8 @@ function move_wolf(x_, y_) {
 	/// move the object.
 	// Add the minimum of either the current speed times the delta time, or max move speed,
 	// so that a frame stutter doesn't blast the object forward.
-	x += x_vector_;
-	y += y_vector_;
+	xVector = x_vector_;
+	yVector = y_vector_;
+	x += xVector;
+	y += yVector;
 }

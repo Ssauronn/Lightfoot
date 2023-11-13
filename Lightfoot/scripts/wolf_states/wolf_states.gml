@@ -219,6 +219,12 @@ function wolf_hunt_hare_dug_in() {
 		wolfCurrentMoveState = wolfMoveState.walk;
 		wolfReturnToPatrolStart = true;
 	}
+	
+	// If the Wolf hears the player move, adjust the lastKnownX to equal the player's direct location.
+	if (point_distance(x, y, obj_player.x, obj_player.y) <= hearingRange) && (obj_player.currentMovementSpeed != 0) {
+		lastKnownX = obj_player.x;
+		lastKnownY = obj_player.y;
+	}
 }
 
 
@@ -266,6 +272,13 @@ function wolf_small_patrol() {
 	// I don't set targetToMoveToX and targetToMoveToY in this function because I want those
 	// variables to only be set once, at the beginning when the state is first sent to big
 	// patrol state.
+	
+	// If the Wolf hears the player move, adjust the lastKnownX to equal the player's direct location.
+	if (point_distance(x, y, obj_player.x, obj_player.y) <= hearingRange) && (obj_player.currentMovementSpeed != 0) {
+		lastKnownX = obj_player.x;
+		lastKnownY = obj_player.y;
+	}
+	
 	
 	// Count down the wolf timer if the timer is still above 0
 	if (searchingForDugInHareCurrentTimer >= 0) && (isOnScreen) {

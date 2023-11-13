@@ -26,7 +26,7 @@ if room == GameRoom {
 	}
 
 	/// Tutorials
-	if tutorialsActive {
+	if tutorialsActive && !pauseMenuActive {
 		#region Beginning Tutorial
 		if !openingTutorialComplete {
 			// Execute the opening tutorial once the game starts and is initialized.
@@ -120,21 +120,30 @@ if room == GameRoom {
 		}
 		#region Wolf Hearing Tutorial
 		if !firstTimeWolfCanHearTutorialComplete {
-			// Execute the tutorial explaining hiding in the snow
-			dialogueTreeMaxChain = ds_grid_get(tutorialsGrid, 1, 11);
-			var nearest_wolf_ = instance_nearest(obj_player.x + (sprite_get_width(obj_player.sprite_index) / 2), obj_player.y + (sprite_get_height(obj_player.sprite_index) / 2), obj_wolf)
-			var wolf_range_ = point_distance(obj_player.x, obj_player.y, nearest_wolf_.x, nearest_wolf_.y);
-			var wolf_within_range_ = false;
-			if wolf_range_ <= (viewW / 12) {
-				wolf_within_range_ = true;
-			}
-			if (wolf_within_range_) && (openingTutorialComplete) && (firstWolfSeenTutorialComplete) && (firstWolfSeenInPackTutorialComplete) && (firstTimeDugInSnowTutorialComplete) {
-				gamePaused = true;
-				play_dialogue(ds_grid_get(tutorialsGrid, 3, (11 + dialogueTreeCurrentChain - 1)));
-				if dialogueTreeCurrentChain > dialogueTreeMaxChain {
-					dialogueTreeCurrentChain = 1;
-					gamePaused = false;
-					firstTimeWolfCanHearTutorialComplete = true;
+			if (obj_player.playerCurrentForm == forms.snowharedugin) || (obj_player.playerCurrentForm == forms.snowharetop) {
+				// Execute the tutorial explaining hiding in the snow
+				dialogueTreeMaxChain = ds_grid_get(tutorialsGrid, 1, 11);
+				var nearest_wolf_ = instance_nearest(obj_player.x + (sprite_get_width(obj_player.sprite_index) / 2), obj_player.y + (sprite_get_height(obj_player.sprite_index) / 2), obj_wolf)
+				var wolf_range_ = point_distance(obj_player.x, obj_player.y, nearest_wolf_.x, nearest_wolf_.y);
+				var wolf_within_range_ = false;
+				if wolf_range_ <= (viewW / 12) {
+					wolf_within_range_ = true;
+				}
+				if (wolf_within_range_) && (openingTutorialComplete) && (firstWolfSeenTutorialComplete) && (firstWolfSeenInPackTutorialComplete) && (firstTimeDugInSnowTutorialComplete) {
+					gamePaused = true;
+					play_dialogue(ds_grid_get(tutorialsGrid, 3, (11 + dialogueTreeCurrentChain - 1)));
+					if dialogueTreeCurrentChain > dialogueTreeMaxChain {
+						// After the standard tutorial setting, I force the player into digging into the snow.
+						with obj_player{
+							formCooldown = formMaxCooldown;
+							playerCurrentForm = forms.snowharedugin;
+						}
+						lastKnownX = nearest_wolf_.x;
+						lastKnownY = nearest_wolf_.y;
+						dialogueTreeCurrentChain = 1;
+						gamePaused = false;
+						firstTimeWolfCanHearTutorialComplete = true;
+					}
 				}
 			}
 		}
@@ -216,7 +225,8 @@ if room == GameRoom {
 		#endregion
 		#endregion
 	}
-	else {
+	// Only disable tutorials if tutorials are disabled in settings
+	else if !tutorialsActive {
 		openingTutorialComplete = true;
 		firstWolfSeenTutorialComplete = true;
 		firstWolfSeenInPackTutorialComplete = true;

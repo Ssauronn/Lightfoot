@@ -45,6 +45,4 @@ viewY = 0;
 viewW = idealWidth;
 viewH = idealHeight;
 
-//room_goto_next();
-
 

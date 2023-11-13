@@ -1,11 +1,11 @@
 {
   "resourceType": "GMSprite",
   "resourceVersion": "1.0",
-  "name": "spr_player_snow_hare_dug_in_left",
-  "bbox_bottom": 42,
-  "bbox_left": 1,
-  "bbox_right": 46,
-  "bbox_top": 2,
+  "name": "spr_wolf_right",
+  "bbox_bottom": 45,
+  "bbox_left": 2,
+  "bbox_right": 59,
+  "bbox_top": 4,
   "bboxMode": 0,
   "collisionKind": 1,
   "collisionTolerance": 0,
@@ -13,15 +13,14 @@
   "edgeFiltering": false,
   "For3D": false,
   "frames": [
-    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"015603d0-1502-40ef-8437-6fb7af604aea",},
+    {"resourceType":"GMSpriteFrame","resourceVersion":"1.1","name":"11b70098-5f79-44aa-b9bd-247616c77907",},
   ],
   "gridX": 0,
   "gridY": 0,
   "height": 48,
   "HTile": false,
   "layers": [
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"6ed682fc-7c0d-46e0-a60e-faef0e43cd9d","blendMode":0,"displayName":"Layer 1","isLocked":false,"opacity":100.0,"visible":true,},
-    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"690982c5-63c6-4312-bea2-dc9250f47aca","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":false,},
+    {"resourceType":"GMImageLayer","resourceVersion":"1.0","name":"86e3151a-f6fc-422d-a71e-0977ff13707f","blendMode":0,"displayName":"default","isLocked":false,"opacity":100.0,"visible":true,},
   ],
   "nineSlice": null,
   "origin": 0,
@@ -33,7 +32,7 @@
   "sequence": {
     "resourceType": "GMSequence",
     "resourceVersion": "1.4",
-    "name": "spr_player_snow_hare_dug_in_left",
+    "name": "spr_wolf_right",
     "autoRecord": true,
     "backdropHeight": 768,
     "backdropImageOpacity": 0.5,
@@ -55,7 +54,7 @@
     "timeUnits": 1,
     "tracks": [
       {"resourceType":"GMSpriteFramesTrack","resourceVersion":"1.0","name":"frames","builtinName":0,"events":[],"inheritsTrackColour":true,"interpolation":1,"isCreationTrack":false,"keyframes":{"resourceType":"KeyframeStore<SpriteFrameKeyframe>","resourceVersion":"1.0","Keyframes":[
-            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"015603d0-1502-40ef-8437-6fb7af604aea","path":"sprites/spr_player_snow_hare_dug_in_left/spr_player_snow_hare_dug_in_left.yy",},},},"Disabled":false,"id":"5c296d18-1a6c-4b03-9601-d1dbcae98b2d","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
+            {"resourceType":"Keyframe<SpriteFrameKeyframe>","resourceVersion":"1.0","Channels":{"0":{"resourceType":"SpriteFrameKeyframe","resourceVersion":"1.0","Id":{"name":"11b70098-5f79-44aa-b9bd-247616c77907","path":"sprites/spr_wolf_right/spr_wolf_right.yy",},},},"Disabled":false,"id":"9f068673-a45e-458d-8f73-9599bb6bdd61","IsCreationKey":false,"Key":0.0,"Length":1.0,"Stretch":false,},
           ],},"modifiers":[],"spriteId":null,"trackColour":0,"tracks":[],"traits":0,},
     ],
     "visibleRange": null,
@@ -71,5 +70,5 @@
   },
   "type": 0,
   "VTile": false,
-  "width": 48,
+  "width": 64,
 }
