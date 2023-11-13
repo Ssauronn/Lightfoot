@@ -32,9 +32,11 @@ if room == GameRoom {
 	if gameBeaten {
 		var x_scale_ = sprite_get_width(spr_splash_screen) / viewW;
 		var y_scale_ = sprite_get_height(spr_splash_screen) / viewH;
-		
+		draw_sprite_ext(spr_button_background, 0, startGameButtonX, startGameButtonY + (2 * (viewH / 32)), 1, 1, 0, c_black, 1);
+		draw_set_color(c_black);
+		draw_text_ext_transformed(viewX + 16, startGameButtonY + (2 * (viewH / 32)), "CONGRATULATIONS! YOU ARE SAFE!", 2, 1000, 4, 4, 0);
+		draw_set_color(c_white);
 	}
-	
 	// If the player has died, draw the death screen
 	if playerDied {
 		var x_scale_ = sprite_get_width(spr_splash_screen) / viewW;
@@ -56,6 +58,7 @@ if room == GameRoom {
 			}
 			draw_sprite_ext(spr_button_background, 0, startGameSmallButtonX, startGameSmallButtonSecondY, startGameSmallButtonScale, startGameSmallButtonScale, 0, c_black, 1);
 			draw_sprite_ext(spr_button_background, 0, startGameSmallButtonX + button_x_adjust_, startGameSmallButtonSecondY+ button_y_adjust_, startGameSmallButtonScale, startGameSmallButtonScale, 0, c_white, 1);
+			draw_text_ext_transformed(startGameSmallButtonX + 4, startGameSmallButtonSecondY + 4, second_button_text_, 2, 600, 2, 2, 0);
 		}
 	}
 	// Draw pause menu buttons
@@ -95,6 +98,20 @@ if room == GameRoom {
 		}
 		draw_sprite_ext(spr_button_background, 0, startGameSmallButtonX, startGameSmallButtonSecondY, startGameSmallButtonScale, startGameSmallButtonScale, 0, c_black, 1);
 		draw_sprite_ext(spr_button_background, 0, startGameSmallButtonX + button_x_adjust_, startGameSmallButtonSecondY+ button_y_adjust_, startGameSmallButtonScale, startGameSmallButtonScale, 0, c_white, 1);
+		
+		// Draw Text for in-game menu
+		draw_text_ext_transformed(startGameButtonX + 16, startGameButtonY + 42, main_button_text_, 2, 600, 4, 4, 0);
+		draw_text_ext_transformed(startGameSmallButtonX + 4, startGameSmallButtonFirstY + 4, first_button_text_, 2, 600, 2, 2, 0);
+		draw_text_ext_transformed(startGameSmallButtonX + 4, startGameSmallButtonSecondY + 4, second_button_text_, 2, 600, 2, 2, 0);
+		draw_set_color(c_black);
+		if tutorialsActive {
+			var tutorial_status_ = "ON"
+		}
+		else {
+			var tutorial_status_ = "OFF"
+		}
+		draw_text_ext_transformed(startGameSmallButtonX + (sprite_get_width(spr_button_background) * startGameSmallButtonScale) + 4, startGameSmallButtonFirstY + 4, tutorial_status_, 2, 600, 2, 2, 0);
+		draw_set_color(c_white);
 	}
 }
 

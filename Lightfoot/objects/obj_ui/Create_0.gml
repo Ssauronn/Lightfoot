@@ -72,6 +72,7 @@ lastBonfireReachedComplete = false;
 firstTimeAlmostFrozenTutorialComplete = false;
 dialogueTreeMaxChain = 1;
 dialogueTreeCurrentChain = 1;
+iconAlpha = 0;
 
 /// Tutorial ds_grid, containing all info for each tutorial popup
 // x, 0, 0, 0 = the number the dialogue is in the chain

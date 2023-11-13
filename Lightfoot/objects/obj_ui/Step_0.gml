@@ -1,5 +1,8 @@
 /// @description Adjust UI Values
-
+iconAlpha += 0.01;
+if iconAlpha > 1 {
+	iconAlpha = 0.0;
+}
 if room == GameRoom {
 	// Timer to make sure everything is initialized before. I set the value to exactly 0 once it drops
 	// below 0, and then to -1 once the code executes, so that the code to initialize only executes once.
